@@ -2,6 +2,7 @@
 #include <iostream>
 #include "argparse.hpp" // CLI library
 #include "lazycsv.hpp" // CSV parsing library
+#include "date.hpp" // Date handling library
 
 int main(int argc, char *argv[]) {
    
@@ -32,11 +33,23 @@ int main(int argc, char *argv[]) {
   for (const auto& row : csv_parser) {
     const auto [day, year, month, measurement] = row.cells(0, 1, 2, 4);
 
+    auto convert = [](auto cell) {
+        return std::stoi(std::string(cell.trimed()));
+    };
 
-    std::cout << "Day: " << day.trimed() << ", Month: " << month.trimed() << ", Year: " << year.trimed()
-              << ", Measurement: " << measurement.trimed() << std::endl;
+    date::year y{convert(year)};
+    date::month m{static_cast<unsigned int>(convert(month))};
+    date::day d{static_cast<unsigned int>(convert(day))};
+
+    date::year_month_day ymd{y, m, d};
+
+    std::cout << "Weekday: " << date::weekday{ymd}
+              << ", Day: " << day.trimed() 
+              << ", Month: " << month.trimed() 
+              << ", Year: " << year.trimed()
+              << ", Measurement: " << measurement.trimed() 
+              << std::endl;
   }
-
  
   return 0;
 }

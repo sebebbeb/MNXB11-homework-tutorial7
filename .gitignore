@@ -37,6 +37,9 @@ external/*
 # Contents of the build folder should not be in git
 build/*
 
+# Contents of the .vscode folder should not be in get
+.vscode/*
+
 # Resulting ROOT files should not be in git
 results/*
 
