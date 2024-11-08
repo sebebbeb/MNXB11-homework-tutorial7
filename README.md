@@ -3,12 +3,7 @@
 This project is a C++ command line application that uses `argparse` for handling CLI arguments and `lazycsv` for CSV parsing, as well as `date` for handling dates and `fmt` for printing to the console.
 
 ## Building the project
-Run
-```bash
-./setup
-make
-```
-or do the following steps manually:
+Run `./setup` and then `make`, or follow these steps manually:
 
 * Ensure `argparse.hpp`, `lazycsv.hpp` and `date.hpp` are in `external/include`.
 ```bash
