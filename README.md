@@ -8,7 +8,7 @@ Firstly, ensure `argparse.hpp` is in `external/include`.
  ```bash
    mkdir -p external/include
    
-   curl -L -o external/include/argparse.hpp https://raw.githubusercontent.com/p-ranav/argparse/main/include/argparse/argparse.hpp
+   curl -L -o external/include/argparse.hpp https://raw.githubusercontent.com/p-ranav/argparse/84c02050ea8bd1bf99de0a4943db40235e9fd5e7/include/argparse/argparse.hpp
   ``` 
 Write `make` to build the project.
 
