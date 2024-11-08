@@ -1,15 +1,26 @@
 
 #include <iostream>
-int main(int argc, char *argv[]) {
-  std::cout << "I am just a code template, you need to implement the "
-               "functionality you want to use yourself!"
-            << std::endl;
+#include "argparse.hpp"
 
-  std::cout << "We were passed " << argc
-            << " command line arguments, the first of which was " << argv[0]
-            << std::endl;
-  std::cout << "With a good CLI library, we could use the command line "
-               "arguments to make a useful program."
-            << std::endl;
+int main(int argc, char *argv[]) {
+   
+  argparse::ArgumentParser program("CSV Reader");
+
+  program.add_argument("-i", "--input-file")
+    .help("Path to input CSV file")
+    .required();
+
+  try {
+      program.parse_args(argc, argv);
+  } catch (const std::runtime_error& err) {
+    std::cerr << err.what() << std::endl;
+    std::cerr << program;
+    return 1;
+  }
+
+  std::string input_file = program.get<std::string>("--input-file");
+
+  std::cout << "Input file: " << input_file << std::endl;
+
   return 0;
 }
