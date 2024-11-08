@@ -1,0 +1,19 @@
+#!/bin/bash
+
+mkdir -p external/include
+
+curl -L -o external/include/argparse.hpp https://raw.githubusercontent.com/p-ranav/argparse/84c02050ea8bd1bf99de0a4943db40235e9fd5e7/include/argparse/argparse.hpp
+echo "SETUP: Added argparse."
+
+curl -L -o external/include/lazycsv.hpp https://raw.githubusercontent.com/ashtum/lazycsv/refs/heads/master/include/lazycsv.hpp
+echo "SETUP: Added lazycsv."
+
+curl -L -o external/include/date.hpp https://raw.githubusercontent.com/HowardHinnant/date/1a4f424659d39c2a222729bd2b1ccd8f857b3221/include/date/date.h
+echo "SETUP: Added date."
+
+mkdir -p build
+
+git clone https://github.com/fmtlib/fmt.git build/fmt
+cmake -S build/fmt -B build/fmt -DCMAKE_INSTALL_PREFIX=external
+make -C build/fmt install
+echo "SETUP: Installed fmt."

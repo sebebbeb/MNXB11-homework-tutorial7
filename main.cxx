@@ -3,6 +3,7 @@
 #include "argparse.hpp" // CLI library
 #include "lazycsv.hpp" // CSV parsing library
 #include "date.hpp" // Date handling library
+#include "fmt/core.h" // String handling library
 
 int main(int argc, char *argv[]) {
    
@@ -38,18 +39,16 @@ int main(int argc, char *argv[]) {
     };
 
     date::year y{convert(year)};
-    date::month m{static_cast<unsigned int>(convert(month))};
-    date::day d{static_cast<unsigned int>(convert(day))};
+    date::month m{static_cast<uint>(convert(month))};
+    date::day d{static_cast<uint>(convert(day))};
 
     date::year_month_day ymd{y, m, d};
 
-    std::cout << "Weekday: " << date::weekday{ymd}
-              << ", Day: " << day.trimed() 
-              << ", Month: " << month.trimed() 
-              << ", Year: " << year.trimed()
-              << ", Measurement: " << measurement.trimed() 
-              << std::endl;
+    std::string weekday = date::format("%A", date::weekday{ymd});
+
+    fmt::print("Weekday: {}, Day: {}, Month: {}, Year: {}, Measurement: {}\n",
+               weekday, day.trimed(), month.trimed(), year.trimed(), measurement.trimed());
   }
- 
+
   return 0;
 }
