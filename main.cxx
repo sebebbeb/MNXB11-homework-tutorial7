@@ -1,6 +1,7 @@
 
 #include <iostream>
-#include "argparse.hpp"
+#include "argparse.hpp" // CLI library
+#include "lazycsv.hpp" // CSV parsing library
 
 int main(int argc, char *argv[]) {
    
@@ -20,7 +21,22 @@ int main(int argc, char *argv[]) {
 
   std::string input_file = program.get<std::string>("--input-file");
 
-  std::cout << "Input file: " << input_file << std::endl;
+  lazycsv::parser<
+      lazycsv::mmap_source,
+      lazycsv::has_header<true>,
+      lazycsv::delimiter<','>,
+      lazycsv::quote_char<'"'>,
+      lazycsv::trim_chars<' ', '\t'>
+  > csv_parser{input_file};
 
+  for (const auto& row : csv_parser) {
+    const auto [day, year, month, measurement] = row.cells(0, 1, 2, 4);
+
+
+    std::cout << "Day: " << day.trimed() << ", Month: " << month.trimed() << ", Year: " << year.trimed()
+              << ", Measurement: " << measurement.trimed() << std::endl;
+  }
+
+ 
   return 0;
 }
